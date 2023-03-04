@@ -74,7 +74,7 @@ def reverse_tuples(input_list):
 # function name must be: remove_tuplicates
 # input parameters: input_list
 
-def remove_tuplicates(input_list):
+def remove_duplicates(input_list):
     return list(set(input_list))
 
 # Create a function that transposes a nested list (matrix)
