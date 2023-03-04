@@ -112,14 +112,19 @@ def transpose(input_list):
 # input parameters: input_list,chunk_size
 
 def split_into_chunks(input_list,chunk_size):
-    temp_list = list()
-    for element in input_list:
-        temp_list += element
+    #temp_list = list()
+    #for element in input_list:
+    #    temp_list += element
 
     output_list = list()
-    for element in range(0,len(temp_list),chunk_size):
-        output_list.append(temp_list[element:element+chunk_size])
+    for element in range(0,len(input_list),chunk_size):
+        output_list.append(input_list[element:element+chunk_size])
     return output_list
+
+#test
+#list1 = [1,2,3,4,5,6,7,8]
+#print(split_into_chunks(list1,3))
+
 
 # Create a function that can merge n dictionaries
 # return type: dictionary
