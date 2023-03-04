@@ -159,9 +159,14 @@ def by_parity(input_list):
 # function name must be: mean_key_value
 # input parameters: input_dict
 
-def mean_key_value(input_dict):
+def mean_key_value(input_dict:dict):
     output_dict = {}
-    for element in input_dict.keys:
+    for element in input_dict.keys():
         output_dict[element] = sum(input_dict[element])/len(input_dict[element])
     return output_dict
+
+#test
+#list1 = {"some_key":[1,2,3,4],"another_key":[1,2,3,4]}
+#print(mean_key_value(list1))
+
 # If all the functions are created convert this notebook into a .py file and push to your repo
