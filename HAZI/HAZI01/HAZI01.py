@@ -66,8 +66,12 @@ def merge_lists(*args):
 def reverse_tuples(input_list):
     output_list = list()
     for element in input_list:
-        output_list.append(reversed(element))
+        output_list.append(tuple(reversed(element)))
     return output_list
+
+#test
+#list1 = [(1,2),(3,4)]
+#print(reverse_tuples(list1))
 
 # Create a function that removes duplicates from a list
 # return type: list
@@ -76,6 +80,10 @@ def reverse_tuples(input_list):
 
 def remove_duplicates(input_list):
     return list(set(input_list))
+
+#test
+#list1 = [1,2,3,3,4,5]
+#print(remove_duplicates(list1))
 
 # Create a function that transposes a nested list (matrix)
 # return type: list
