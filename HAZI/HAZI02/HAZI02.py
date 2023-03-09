@@ -181,7 +181,7 @@ def list_days(date1,date2):
 # Be:
 # Ki: 2017-03-24
 
-def current_date():
+def get_act_date():
     return date.today()
 
 #print(current_date())
