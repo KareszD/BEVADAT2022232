@@ -1,5 +1,5 @@
 import time
-from datetime import date, timedelta, datetime
+from datetime import date
 
 import numpy as np
 
@@ -9,7 +9,7 @@ import numpy as np
 # column_swap()
 
 def column_swap(array):
-    return np.roll(array, 1, 1)
+    return np.roll(array, 1, 1).tolist()
 
 #print(column_swap([[1,2],[3,4]]))
 
@@ -20,12 +20,9 @@ def column_swap(array):
 # egyenlő elemszámúakra kell csak hogy működjön
 
 def compare_two_array(array1,array2):
-    a = np.array(array1) == np.array(array2)
-    b = []
-    for i in range(len(a)):
-        if a[i] == True:
-            b.append(i)
-    return b
+    a = np.where(np.array(array1) == np.array(array2))
+    return np.array(a)
+
 
 #print(compare_two_array([7,8,9,10], [9,8,7,10]))
 
@@ -40,23 +37,24 @@ def get_array_shape(array):
     output = ''
     #sor
     if len(a.shape) > 0:
-        output += f'sor: {a.shape[0]}, '
+        output += f'sor: {a.shape[-2]}, '
     else:
         output += f'sor: 1, '
     #oszlop
     if len(a.shape) > 1:
-        output += f'oszlop: {a.shape[1]}, '
+        output += f'oszlop: {a.shape[-1]}, '
     else:
         output += f'oszlop: 1, '
     #melyseg
     if len(a.shape) > 2:
-        output += f'melyseg: {a.shape[2]}'
+        output += f'melyseg: {a.shape[-3]}'
     else:
         output += f'melyseg: 1'
     return output
 
-#print(get_array_shape([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])) #3D
+#print(get_array_shape([[[1, 2,1], [3, 4,1]], [[5, 6,1], [7, 8,1]]])) #3D
 #print(get_array_shape([[1,2,3], [4,5,6]])) #2D
+
 
 # Készíts egy olyan függvényt, aminek segítségével elő tudod állítani egy neurális hálózat tanításához szükséges Y-okat egy numpy array-ből.
 #Bementként add meg az array-t, illetve hogy mennyi class-od van. Kimenetként pedig adjon vissza egy 2d array-t, ahol a sorok az egyes elemek. Minden nullákkal teli legyen és csak ott álljon egyes, ahol a bementi tömb megjelöli
@@ -70,7 +68,7 @@ def encode_Y(array,soros):
         b = np.zeros(soros)
         b[array[i]] = 1
         a.append(b)
-    return a
+    return np.array(a,int).tolist()
 
 #print(encode_Y([1, 2, 0, 3], 4))
 
@@ -80,14 +78,15 @@ def encode_Y(array,soros):
 # decode_Y()
 
 def decode_Y(array):
-    array = np.array(array)
+    #array = np.array(array)
     a = []
     for i in array:
-        a.append(np.where(i == 1))
-    a = np.array(a,int)
-    return a.tolist()
+        for j in range(len(i)):
+            if i[j]==1:
+                a.append(j)
+    return a
 
-#print(decode_Y([[0,1,0,0], [0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1]]))
+print(decode_Y([[0,1,0,0], [0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1]]))
 
 # Készíts egy olyan függvényt, ami képes kiértékelni egy neurális háló eredményét! Bemenetként egy listát és egy array-t és adja vissza a legvalószínübb element a listából.
 # Be: ['alma', 'körte', 'szilva'], [0.2, 0.2, 0.6].
@@ -121,7 +120,7 @@ def replace_by_value(array,num):
     array = np.array(array)
     array[array<num] = -1
     array[array>=num] = 1
-    return array
+    return array.tolist()
 
 #print(replace_by_value([1, 2, 5, 0], 2))
 
