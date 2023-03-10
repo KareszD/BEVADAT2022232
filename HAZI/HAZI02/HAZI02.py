@@ -86,7 +86,7 @@ def decode_Y(array):
                 a.append(j)
     return a
 
-print(decode_Y([[0,1,0,0], [0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1]]))
+#print(decode_Y([[0,1,0,0], [0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1]]))
 
 # Készíts egy olyan függvényt, ami képes kiértékelni egy neurális háló eredményét! Bemenetként egy listát és egy array-t és adja vissza a legvalószínübb element a listából.
 # Be: ['alma', 'körte', 'szilva'], [0.2, 0.2, 0.6].
