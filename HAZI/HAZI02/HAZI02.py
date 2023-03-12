@@ -192,4 +192,4 @@ def sec_from_1970():
     now = np.datetime64("now")
     return (now-since).astype(int)
 
-print(sec_from_1970())
+#print(sec_from_1970())
