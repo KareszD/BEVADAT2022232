@@ -34,23 +34,8 @@ def compare_two_array(array1,array2):
 
 def get_array_shape(array):
     a = np.array(array)
-    output = ''
-    #sor
-    if len(a.shape) > 0:
-        output += f'sor: {a.shape[-2]}, '
-    else:
-        output += f'sor: 1, '
-    #oszlop
-    if len(a.shape) > 1:
-        output += f'oszlop: {a.shape[-1]}, '
-    else:
-        output += f'oszlop: 1, '
-    #melyseg
-    if len(a.shape) > 2:
-        output += f'melyseg: {a.shape[-3]}'
-    else:
-        output += f'melyseg: 1'
-    return output
+    size = a.shape
+    return f"sor: {size[-2] if len(size) >= 2 else 1}, oszlop: {size[-1]}, melyseg: {size[-3] if len(size) >= 3 else 1}"
 
 #print(get_array_shape([[[1, 2,1], [3, 4,1]], [[5, 6,1], [7, 8,1]]])) #3D
 #print(get_array_shape([[1,2,3], [4,5,6]])) #2D
@@ -62,13 +47,13 @@ def get_array_shape(array):
 # Ki: [[0,1,0,0], [0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1]]
 # encode_Y()
 
-def encode_Y(array,soros):
+def encode_Y(array, classSize):
     a = []
-    for i in range(soros):
-        b = np.zeros(soros)
-        b[array[i]] = 1
-        a.append(b)
-    return np.array(a,int)
+    for i in range(len(array)):
+        a.append(np.zeros(classSize))
+        a[i][array[i]] = 1
+
+    return np.array(a, int)
 
 #print(encode_Y([1, 2, 0, 3], 4))
 
@@ -164,12 +149,13 @@ def add_border(innerarray):
 # Ki: ['2023-03-01', '2023-03-02', .. , '2023-03-31',]
 # list_days()
 
-def list_days(date1,date2):
+def list_days(date1 ,date2 ):
     start = np.datetime64(date1,'D')
     end = np.datetime64(date2,'D')
     delta = np.timedelta64(1, 'D')
     days = np.arange(start,end,delta)
-    return days.astype(str)
+    return np.array(days)
+
 
 #print(list_days('2023-03', '2023-04'))
 
