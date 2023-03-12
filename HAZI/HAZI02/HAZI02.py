@@ -68,7 +68,7 @@ def encode_Y(array,soros):
         b = np.zeros(soros)
         b[array[i]] = 1
         a.append(b)
-    return np.array(a,int).tolist()
+    return np.array(a,int)
 
 #print(encode_Y([1, 2, 0, 3], 4))
 
@@ -165,14 +165,11 @@ def add_border(innerarray):
 # list_days()
 
 def list_days(date1,date2):
-    a = []
     start = np.datetime64(date1,'D')
     end = np.datetime64(date2,'D')
     delta = np.timedelta64(1, 'D')
     days = np.arange(start,end,delta)
-    for i in days:
-        a.append(str(i))
-    return a
+    return days.astype(str)
 
 #print(list_days('2023-03', '2023-04'))
 
@@ -191,6 +188,8 @@ def get_act_date():
 # sec_from_1970()
 
 def sec_from_1970():
-    return int(time.time())
+    since = np.datetime64(120,"s")
+    now = np.datetime64("now")
+    return (now-since).astype(int)
 
-#print(sec_from_1970())
+print(sec_from_1970())
