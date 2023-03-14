@@ -9,7 +9,7 @@ import numpy as np
 # column_swap()
 
 def column_swap(array):
-    return np.roll(array, 1, 1).tolist()
+    return np.flip(array,1)
 
 #print(column_swap([[1,2],[3,4]]))
 
