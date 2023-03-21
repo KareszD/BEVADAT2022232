@@ -98,13 +98,14 @@ függvény neve: plot_population
 
 # %%
 def plot_population(df1):
-    plt.plot(df1['country'],df1['population'])  
-    plt.title('Population of Countries')
-    plt.xlabel('Country')
-    plt.ylabel('Population (millions)')
-    plt.show()
+    fig,ax = plt.subplots()
+    ax.plot(df1['country'],df1['population'])  
+    ax.set_title('Population of Countries')
+    ax.set_xlabel('Country')
+    ax.set_ylabel('Population (millions)')
+    return fig
 
-plot_population(df)
+#plot_population(df)
 
 # %%
 '''
