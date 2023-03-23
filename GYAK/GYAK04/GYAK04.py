@@ -57,7 +57,7 @@ függvény neve: get_top_two
 # %%
 def get_top_two(df1):
     new_df = df1.copy()
-    return pd.DataFrame.sort_values(new_df,by=['area'])[:2:-1]
+    return new_df.sort_values(by=['area'],ascending=False).head(2)
 
 #print(get_top_two(df))
 
@@ -98,14 +98,16 @@ függvény neve: plot_population
 
 # %%
 def plot_population(df1):
+    new_df = df1.copy()
     fig,ax = plt.subplots()
-    ax.plot(df1['country'],df1['population'])  
+    ax.bar(new_df['country'],new_df['population'])
     ax.set_title('Population of Countries')
     ax.set_xlabel('Country')
     ax.set_ylabel('Population (millions)')
     return fig
 
 #plot_population(df)
+#plt.show()
 
 # %%
 '''
@@ -121,14 +123,16 @@ függvény neve: plot_area
 '''
 
 # %%
-def plot_area(df1):
+def plot_area(df1: pd.DataFrame):
     new_df = df1.copy()
     #new_df['area'] = new_df['area'].astpye(int) 
     fig, ax = plt.subplots()
+    ax.set_title('Area of Countries')
     ax.pie(new_df['area'], labels=new_df['country'])
     return fig
     
 #plot_area(df)
+#plt.show()
 
 
 
