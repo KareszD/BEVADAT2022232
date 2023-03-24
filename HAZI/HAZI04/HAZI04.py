@@ -27,7 +27,7 @@ függvény neve: csv_to_df
 def csv_to_df(datas):
     return pd.read_csv(datas)
 
-df = csv_to_df('StudentsPerformance.csv')
+#df = csv_to_df('StudentsPerformance.csv')
 #print(df)
 
 
