@@ -48,9 +48,9 @@ def capitalize_columns(df1):
     tmplist = []
     for x in newdf.columns:
         if 'e' in x:
-            tmplist.append(x.upper())
-        else:
             tmplist.append(x)
+        else:
+            tmplist.append(x.upper())
     newdf.columns = tmplist
     return newdf
 
@@ -125,7 +125,7 @@ def add_age(df1):
     random.seed(42)
     newdf["age"] = 0
     for x in range(len(newdf["age"])):
-        newdf["age"][x] = random.randint(18,66)
+        newdf["age"][x] = random.randint(18,67)
     return newdf
 
 #print(add_age(df))
@@ -167,23 +167,25 @@ függvény neve: add_grade
 '''
 
 def add_grade(df1):
-    newdf = df1.copy()
-    score = ['math score', 'reading score', 'writing score']
-    newdf['avg'] = newdf[score].mean(axis=1)
-    newdf["grade"] = ""
-    for x in range(len(newdf["avg"])):
-        result = newdf['avg'][x]
-        if 90 <= result <=100:
-            newdf['grade'][x] = 'A'
-        elif 80 <= result <90:
-            newdf['grade'][x] = 'B'
-        elif 70 <= result <80:
-            newdf['grade'][x] = 'C'
-        elif 60 <= result <70:
-            newdf['grade'][x] = 'D'
+    newDf = input.copy()
+    scores = ["math score", "reading score", "writing score"]
+
+    newDf['grade'] = ""
+
+    for x in range(len(newDf)):
+        result = (newDf.iloc[x][scores].sum() / 300) * 100
+        if 90 <= result <= 100:
+            newDf['grade'][x] = 'A'
+        elif 80 <= result < 90:
+            newDf['grade'][x] = 'B'
+        elif 70 <= result < 80:
+            newDf['grade'][x] = 'C'
+        elif 60 <= result < 70:
+            newDf['grade'][x] = 'D'
         else:
-            newdf['grade'][x] = 'E'
-    return newdf
+            newDf['grade'][x] = 'F'
+
+    return newDf
 
 #print(add_grade(df))
 
@@ -201,9 +203,18 @@ return type: matplotlib.figure.Figure
 függvény neve: math_bar_plot
 '''
 
+def math_bar_plot(df1):
+    new_df = df1.copy()
+    xd = new_df.groupby(['gender'])['math score'].mean()
+    fig,ax = plt.subplots()
+    ax.bar(xd.index,xd.values)
+    ax.set_title('Average Math Score by Gender')
+    ax.set_xlabel('Gender')
+    ax.set_ylabel('Math Score')
+    return fig
 
-
-
+#math_bar_plot(df)
+#plt.show()
 
 ''' 
 Készíts egy függvényt, ami a bemeneti Dataframe adatai alapján elkészít egy olyan histogramot,
@@ -219,9 +230,17 @@ return type: matplotlib.figure.Figure
 függvény neve: writing_hist
 '''
 
+def writing_hist(df1):
+    new_df = df1.copy()
+    fig,ax = plt.subplots()
+    ax.hist(new_df['writing score'])
+    ax.set_title('Distribution of Writing Scores')
+    ax.set_xlabel('Writing Score')
+    ax.set_ylabel('Number of Students')
+    return fig
 
-
-
+#writing_hist(df)
+#plt.show()
 
 ''' 
 Készíts egy függvényt, ami a bemeneti Dataframe adatai alapján elkészít egy olyan kördiagramot,
@@ -236,3 +255,14 @@ Egy példa a kimenetre: fig
 return type: matplotlib.figure.Figure
 függvény neve: ethnicity_pie_chart
 '''
+
+def ethnicity_pie_chart(df1):
+    new_df = df1.copy()
+    xd = new_df.groupby(['race/ethnicity'])['race/ethnicity'].count()
+    fig, ax = plt.subplots()
+    ax.set_title('Proportion of Students by Race/Ethnicity')
+    ax.pie(xd, labels=xd.index,autopct='%1.1f%%')
+    return fig
+
+#ethnicity_pie_chart(df)
+#plt.show()
