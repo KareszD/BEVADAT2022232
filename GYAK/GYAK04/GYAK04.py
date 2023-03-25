@@ -38,7 +38,7 @@ függvény neve: get_column
 '''
 
 # %%
-def get_column(cname,df1):
+def get_column(df1,cname):
     new_df = df1.copy()
     return new_df[cname]
 
