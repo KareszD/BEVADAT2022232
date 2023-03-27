@@ -167,25 +167,23 @@ függvény neve: add_grade
 '''
 
 def add_grade(df1):
-    newDf = input.copy()
+    newdf=df1.copy()
     scores = ["math score", "reading score", "writing score"]
-
-    newDf['grade'] = ""
-
-    for x in range(len(newDf)):
-        result = (newDf.iloc[x][scores].sum() / 300) * 100
-        if 90 <= result <= 100:
-            newDf['grade'][x] = 'A'
-        elif 80 <= result < 90:
-            newDf['grade'][x] = 'B'
-        elif 70 <= result < 80:
-            newDf['grade'][x] = 'C'
-        elif 60 <= result < 70:
-            newDf['grade'][x] = 'D'
+    grades=[]
+    for i in range(len(newdf)):
+        newcol = (newdf.iloc[i][scores].sum() / 300) * 100
+        if newcol >= 90:
+            grades.append('A')
+        elif newcol >= 80:
+            grades.append('B')
+        elif newcol >= 70:
+            grades.append('C')
+        elif newcol >= 60:
+            grades.append('D')
         else:
-            newDf['grade'][x] = 'F'
-
-    return newDf
+            grades.append('F')
+    newdf['grade']=grades
+    return newdf
 
 #print(add_grade(df))
 
