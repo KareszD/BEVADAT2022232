@@ -62,8 +62,8 @@ class KNNClassifier:
         train_size = len(features) - test_size
         assert len(features) == test_size + train_size, "Size mismatch!"
 
-        x_train,y_train = features[:train_size,:],labels[:train_size]
-        x_test,y_test = features[train_size:train_size+test_size,:], labels[train_size:train_size + test_size]
+        x_train, y_train = features[:train_size], labels[:train_size]
+        x_test, y_test = features[train_size:], labels[train_size:]
         self.x_train = x_train
         self.y_train = y_train
         self.x_test = x_test
