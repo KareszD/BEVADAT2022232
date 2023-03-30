@@ -76,7 +76,7 @@ class KNNClassifier:
     def predict(self,x_test:np.ndarray) -> np.ndarray:
         labels_pred = []
         for x_test_element in x_test:
-            distances = KNNClassifier.euclidean(self.x_train,x_test_element)
+            distances = KNNClassifier.euclidean(self,x_test_element)
             distances = np.array(sorted(zip(distances,self.y_train)))
             label_pred = mode(distances[:self.k,1],keepdims=False).mode
             labels_pred.append(label_pred)
@@ -90,4 +90,5 @@ class KNNClassifier:
 
     def confusion_matrix(self):
             conf_matrix = confusion_matrix(self.y_test,self.y_preds)
-            sns.heatmap(conf_matrix,annot=True)
+            #sns.heatmap(conf_matrix,annot=True)
+            return conf_matrix
