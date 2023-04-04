@@ -1,0 +1,20 @@
+load_csv:
+Betöltjük a megfelelő csv file-t. Két részre választjuk a database-t x-re(bemenet) és y-ra(eredmény)
+
+train_test_split:
+A két részre bontott adatunkat mégegyszer ketté vágjuk mivel kell egy adathalmaz amivel tanitunk és kell egy halmaz amivel tesztelünk
+
+euclidean:
+Kiszámolja egy pont távolságát az összes többihez képest. Derékszögú háromszög átlót számol
+
+predict:
+Megnézi a k legközelebbi x szomszédot és megadja a hozzájuk tartozó y értékek móduszát
+
+accuracy:
+Összehasonlitja a predictelt és a tényleges értékeket
+
+plot_confusion_matrix:
+Megmutatja a klasszifikációnk pontosságát egy 2x2-es mátrixban
+
+best_k:
+Teszteli hogy melyik k értékkel érjük el a legpontosabb  eredményt
