@@ -14,14 +14,16 @@ class NJCleaner:
     def drop_columns_and_nan(self):
         drop = self.data.drop(['from','to'],axis=1)
         drop.dropna()
-        return drop
+        self.data = drop
+        #return drop
 
     def convert_date_to_day(self):
         dates = self.data
         dates['date'] = pd.to_datetime(dates['date'])
         dates['day'] = dates['date'].dt.day_name()
         dates = dates.drop(['date'],axis=1)
-        return dates
+        self.data = dates
+        #return dates
 
     def convert_scheduled_time_to_part_of_the_day(self):
         schedule = self.data
@@ -49,17 +51,18 @@ class NJCleaner:
         delayes['delay'] = 0
         #delayes.loc[delayes['delay_minutes']< 5,['delay']] = 0
         delayes.loc[delayes['delay_minutes'] >= 5, ['delay']] = 1
-        return delayes
+        self.data = delayes
+        #return delayes
 
     def drop_unnecessary_columns(self):
         dropos = self.data
         dropos.drop(['train_id','actual_time','delay_minutes'],axis=1,inplace=True)
         return dropos
 
-    def save_first_60k(self,save_path):
+    def save_first_60k(self,path):
         to_print = self.data.loc[:60000, :].copy()
 
-        to_print.to_csv(save_path, index=False)
+        to_print.to_csv(path, index=False)
 
 
     def prep_df(self,path='data/NJ.csv'):
@@ -73,12 +76,8 @@ class NJCleaner:
         NJCleaner.save_first_60k(self,path)
         #self.data.head()
 
-
 #njcl = NJCleaner('2018_03.csv')
 
-#njcl.prep_df('lul')
+#njcl.prep_df('lul.csv')
 
 #print('XD')
-
-
-
