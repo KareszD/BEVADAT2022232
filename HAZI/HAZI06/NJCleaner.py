@@ -60,7 +60,7 @@ class NJCleaner:
         return dropos
 
     def save_first_60k(self,path):
-        to_print = self.data.loc[:60000, :].copy()
+        to_print = self.data.loc[:59999, :].copy()
 
         to_print.to_csv(path, index=False)
 
