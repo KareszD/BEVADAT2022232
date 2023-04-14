@@ -14,16 +14,16 @@ class NJCleaner:
     def drop_columns_and_nan(self):
         drop = self.data.drop(['from','to'],axis=1)
         drop.dropna()
-        self.data = drop
-        #return drop
+
+        return drop
 
     def convert_date_to_day(self):
         dates = self.data
         dates['date'] = pd.to_datetime(dates['date'])
         dates['day'] = dates['date'].dt.day_name()
         dates = dates.drop(['date'],axis=1)
-        self.data = dates
-        #return dates
+
+        return dates
 
     def convert_scheduled_time_to_part_of_the_day(self):
         schedule = self.data
@@ -51,8 +51,8 @@ class NJCleaner:
         delayes['delay'] = 0
         #delayes.loc[delayes['delay_minutes']< 5,['delay']] = 0
         delayes.loc[delayes['delay_minutes'] >= 5, ['delay']] = 1
-        self.data = delayes
-        #return delayes
+
+        return delayes
 
     def drop_unnecessary_columns(self):
         dropos = self.data
@@ -67,10 +67,10 @@ class NJCleaner:
 
     def prep_df(self,path='data/NJ.csv'):
         self.data = self.order_by_scheduled_time()
-        self.drop_columns_and_nan()
-        self.convert_date_to_day()
+        self.data = self.drop_columns_and_nan()
+        self.data = self.convert_date_to_day()
         self.data = self.convert_scheduled_time_to_part_of_the_day()
-        self.convert_delay()
+        self.data = self.convert_delay()
         self.data = self.drop_unnecessary_columns()
 
         NJCleaner.save_first_60k(self,path)
