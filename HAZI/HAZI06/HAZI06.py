@@ -148,7 +148,7 @@ class Node():
 
 from timeit import default_timer as timer
 
-data = pd.read_csv('lul.csv')
+data = pd.read_csv('NJ_60k.csv')
 
 X = data.iloc[:,:-1].values
 Y = data.iloc[:,-1].values.reshape(-1,1)
@@ -159,14 +159,14 @@ classifier = DecisionTreeClassifier(min_samples_split=3,max_depth=3)
 classifier.fit(X_train,Y_train)
 Y_pred = classifier.predict(X_test)
 print(accuracy_score(Y_test,Y_pred))
-'''
-'''
+
+
 start = timer()
 
-results = np.zeros([50,50])
+results = np.zeros([400,400])
 
-for i in range(2,49,10):
-    for j in range(2,10):
+for i in range(50,300,20):
+    for j in range(10,50,5):
         classifier = DecisionTreeClassifier(min_samples_split=i, max_depth=j)
         classifier.fit(X_train, Y_train)
         Y_pred = classifier.predict(X_test)
@@ -182,13 +182,146 @@ print('--------------------------------------------------------------')
 print(results)
 
 print("Time:" , timer()-start)
-'''
 
-#6,10
-classifier = DecisionTreeClassifier(min_samples_split=6, max_depth=10)
+'''
+#90,10
+classifier = DecisionTreeClassifier(min_samples_split=90, max_depth=10)
 classifier.fit(X_train, Y_train)
 Y_pred = classifier.predict(X_test)
 print(accuracy_score(Y_test, Y_pred))
+
+
+'''
+Eleinte kézzel próbálkoztam reménykedve hogy közel lesz a megoldás az órai alap adatokhoz de hamar rájöttem egy két 
+próba után hogy ez nem fenttartható és nem is jutottam semmire mivel az accuracy nagyon nem változott legalább is 
+annyira nem hogy a 80%-hoz elég közel legyen.
+Azt is észre kellett vennem hogy 6 nál feljebb nem tudott menni a max depth, először azt hittem hogy ez direkt van 
+ezért kipróbáltam kb az összes értéket ezen belül de nem volt meg a 80% és ez így már egy kicsit gyanús volt
+'if best_split != {} and best_split["info_gain"] > 0:' ez a sor volt a ludas. Nem volt ellenőrizve hogy üres-e a best 
+split így nagyon hamar crashelt de miutáb ez abszolválva lett már bármilyen értéket meg lehetett adni de még itt sem volt 
+tökéletes minden mivel rossz adathalamazon kezdtem el dolgozni :(
+Sajnos a saját házim csv-jével csináltam rengetek grid-search-ös tesztet és nagyon jó eredmények jöttek ki legalább is 
+azt hittem de sajnos kiderült hogy még nem volt jó a házim ezért fals adatokat kaptam de végül jött a teszt jó lett a 
+házim és akkor már a jó adatokkal el tudtam kezdeni a grid-search-ölést ahol előző tapasztalatok alapján láttam hogy 
+eléggé el kell távolodnom az alap értékektől és két számjegyu paraméterekkel ezek az adatok jöttek ki ahol a 90-es min_samples_split és a 10-es depth hozta a legjobb eredményt.
+Viszont észre kellett vegyem hogy azért egy idő után már majdnem hogy nem változnak a százalékok mivel már túltanult a fa.
+
+Ez a teszt 16044.311065900001 másodpercig tartott
+
+80.10833  i:  50  j:  10
+79.4  i:  50  j:  15
+78.73333  i:  50  j:  20
+78.54167  i:  50  j:  25
+78.525  i:  50  j:  30
+78.525  i:  50  j:  35
+78.525  i:  50  j:  40
+78.525  i:  50  j:  45
+80.125  i:  70  j:  10
+79.5  i:  70  j:  15
+79.11667  i:  70  j:  20
+79.08333  i:  70  j:  25
+79.08333  i:  70  j:  30
+79.08333  i:  70  j:  35
+79.08333  i:  70  j:  40
+79.08333  i:  70  j:  45
+80.18333  i:  90  j:  10
+79.70833  i:  90  j:  15
+79.46667  i:  90  j:  20
+79.45  i:  90  j:  25
+79.45  i:  90  j:  30
+79.45  i:  90  j:  35
+79.45  i:  90  j:  40
+79.45  i:  90  j:  45
+80.14167  i:  110  j:  10
+79.64167  i:  110  j:  15
+79.50833  i:  110  j:  20
+79.5  i:  110  j:  25
+79.5  i:  110  j:  30
+79.5  i:  110  j:  35
+79.5  i:  110  j:  40
+79.5  i:  110  j:  45
+79.93333  i:  130  j:  10
+79.56667  i:  130  j:  15
+79.40833  i:  130  j:  20
+79.4  i:  130  j:  25
+79.4  i:  130  j:  30
+79.4  i:  130  j:  35
+79.4  i:  130  j:  40
+79.4  i:  130  j:  45
+79.91667  i:  150  j:  10
+79.6  i:  150  j:  15
+79.48333  i:  150  j:  20
+79.475  i:  150  j:  25
+79.475  i:  150  j:  30
+79.475  i:  150  j:  35
+79.475  i:  150  j:  40
+79.475  i:  150  j:  45
+79.90833  i:  170  j:  10
+79.725  i:  170  j:  15
+79.675  i:  170  j:  20
+79.675  i:  170  j:  25
+79.675  i:  170  j:  30
+79.675  i:  170  j:  35
+79.675  i:  170  j:  40
+79.675  i:  170  j:  45
+79.9  i:  190  j:  10
+79.79167  i:  190  j:  15
+79.775  i:  190  j:  20
+79.775  i:  190  j:  25
+79.775  i:  190  j:  30
+79.775  i:  190  j:  35
+79.775  i:  190  j:  40
+79.775  i:  190  j:  45
+79.875  i:  210  j:  10
+79.74167  i:  210  j:  15
+79.73333  i:  210  j:  20
+79.73333  i:  210  j:  25
+79.73333  i:  210  j:  30
+79.73333  i:  210  j:  35
+79.73333  i:  210  j:  40
+79.73333  i:  210  j:  45
+79.88333  i:  230  j:  10
+79.75  i:  230  j:  15
+79.75  i:  230  j:  20
+79.75  i:  230  j:  25
+79.75  i:  230  j:  30
+79.75  i:  230  j:  35
+79.75  i:  230  j:  40
+79.75  i:  230  j:  45
+79.9  i:  250  j:  10
+79.775  i:  250  j:  15
+79.775  i:  250  j:  20
+79.775  i:  250  j:  25
+79.775  i:  250  j:  30
+79.775  i:  250  j:  35
+79.775  i:  250  j:  40
+79.775  i:  250  j:  45
+79.925  i:  270  j:  10
+79.80833  i:  270  j:  15
+79.81667  i:  270  j:  20
+79.81667  i:  270  j:  25
+79.81667  i:  270  j:  30
+79.81667  i:  270  j:  35
+79.81667  i:  270  j:  40
+79.81667  i:  270  j:  45
+79.86667  i:  290  j:  10
+79.76667  i:  290  j:  15
+79.76667  i:  290  j:  20
+79.76667  i:  290  j:  25
+79.76667  i:  290  j:  30
+79.76667  i:  290  j:  35
+79.76667  i:  290  j:  40
+79.76667  i:  290  j:  45
+'''
+
+
+
+
+
+
+
+
+
 
 
 
