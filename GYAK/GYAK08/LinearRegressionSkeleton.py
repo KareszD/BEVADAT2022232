@@ -1,7 +1,5 @@
 import numpy as np
 
-
-
 class LinearRegression:
     def __init__(self, epochs: int = 1000, lr: float = 1e-3):
         self.epoch = epochs
@@ -24,8 +22,6 @@ class LinearRegression:
             D_yi = (-2/n) * sum(residuals)  # Derivative wrt c
             self.s = self.s + self.learning_rate * D_s  # Update m
             self.y_intercept = self.y_intercept + self.learning_rate * D_yi  # Update c
-            # if i % 100 == 0:
-                # print(np.mean(self.y_train-y_pred))
 
     def predict(self, X):
         y_pred = self.s* X + self.y_intercept

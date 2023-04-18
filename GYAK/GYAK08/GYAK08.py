@@ -21,9 +21,8 @@ preds = []
 for x in X_test:
     preds.append(lin_reg.predict(x))
 
-
-#print("Mean Absolute Error:", np.mean(np.abs(preds - y_test)))
-#print("Mean Squared Error:", np.mean((preds - y_test)**2))
+print("Mean Absolute Error:", np.mean(np.abs(preds - y_test)))
+print("Mean Squared Error:", np.mean((preds - y_test)**2))
 
 plt.scatter(X_test, y_test)
 plt.plot([min(X_test), max(X_test)], [min(preds), max(preds)], color='red') # predicted
