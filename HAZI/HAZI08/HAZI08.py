@@ -33,7 +33,7 @@ függvény neve: check_data
 
 def check_data(iris)->pd.core.frame.DataFrame:
     df = pd.DataFrame(iris.data, columns=iris.feature_names)
-    return df.iloc[:5,:]
+    return df.iloc[:5,:2]
 
 #print(check_data(load_iris_data()))
 
@@ -48,7 +48,7 @@ return type: (numpy.ndarray, numpy.ndarray)
 
 def prep(iris):
     df = pd.DataFrame(iris.data, columns=iris.feature_names)
-    X = df["petal width (cm)"].values
+    X = df["sepal width (cm)"].values
     y = df['sepal length (cm)'].values
     return X,y
 
@@ -72,12 +72,9 @@ Egy példa a kimenetre: X_train, X_test, y_train, y_test
 return type: (numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray)
 '''
 
-
-
 def dara(X,y):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     return X_train, X_test, y_train, y_test
-
 
 '''
 Készíts egy függvényt ami feltanít egy lineaáris regressziós modelt, majd visszatér vele.
