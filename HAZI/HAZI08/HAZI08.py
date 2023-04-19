@@ -46,10 +46,10 @@ Egy példa a kimenetre: X, y
 return type: (numpy.ndarray, numpy.ndarray)
 '''
 
-def prep(iris):
+def preplinreg(iris):
     df = pd.DataFrame(iris.data, columns=iris.feature_names)
-    X = df["sepal width (cm)"].values
-    y = df['sepal length (cm)'].values
+    X = df["sepal width (cm)"].values.reshape(-1,1)
+    y = df['sepal length (cm)'].values.reshape(-1,1)
     return X,y
 
 ''' 
@@ -62,6 +62,14 @@ Egy példa a kimenetre: X, y
 return type: (numpy.ndarray, numpy.ndarray)
 '''
 
+def preplogreg(iris):
+    df = pd.DataFrame(iris.data)
+    df['class'] = iris.target
+
+    df.columns = ['sepal_len', 'sepal_wid', 'petal_len', 'petal_wid', 'class']
+    X = df.iloc[:, :-1]
+    y = df.iloc[:, -1]
+    return X, y
 
 '''
 Készíts egy függvényt ami feldarabolja az adatainkat train és test részre. Az adatok 20%-át használjuk fel a teszteléshez.
@@ -84,8 +92,10 @@ Egy példa a kimenetre: model
 return type: sklearn.linear_model._base.LinearRegression
 '''
 
-def fitreg(X_train,y_train)->sklearn.linear_model._base.LinearRegression:
-    return LinearRegression.fit(X_train,y_train)
+def fitlin(X_train,y_train)->LinearRegression:
+    a = LinearRegression()
+    a.fit(X = X_train,y = y_train)
+    return a
 
 '''
 Készíts egy függvényt ami feltanít egy logisztikus regressziós modelt, majd visszatér vele.
@@ -95,8 +105,8 @@ Egy példa a kimenetre: model
 return type: sklearn.linear_model._base.LogisticRegression
 '''
 
-def fitlog(X_train,y_train)->sklearn.linear_model._base.LogisticRegression:
-    return LogisticRegression.fit(X_train,y_train)
+def fitlog(X_train,y_train)->LogisticRegression:
+    return LogisticRegression().fit(X = X_train,y = y_train)
 
 ''' 
 Készíts egy függvényt, ami a feltanított modellel predikciót tud végre hajtani.
@@ -107,10 +117,10 @@ return type: numpy.ndarray
 '''
 
 def pred(model,X_test)->numpy.ndarray:
-    if model is sklearn.linear_model._base.LogisticRegression:
-        return LogisticRegression.predict(X_test)
+    if model is LogisticRegression:
+        return model.predict(X = X_test)
     else:
-        return LinearRegression.predict(X_test)
+        return model.predict(X = X_test)
 
 '''
 Készíts egy függvényt, ami vizualizálni tudja a label és a predikciók közötti eltérést.
@@ -143,5 +153,27 @@ return type: float
 
 def mse(y_test,y_pred):
     return np.mean((y_pred - y_test)**2)
+'''
+#LIN
+iris = load_iris_data()
+X,y = preplinreg(iris)
+X_train, X_test, y_train, y_test = dara(X,y)
+linmod = fitlin(X_train,y_train)
+preds = pred(linmod,X_test)
+plotos(y_test,preds)
+plt.show()
+print(mse(y_test,preds))
+'''
+'''
+#LOG
+iris = load_iris_data()
+X,y = preplogreg(iris)
+X_train, X_test, y_train, y_test = dara(X,y)
+linmod = fitlog(X_train,y_train)
+preds = pred(linmod,X_test)
+plotos(y_test,preds)
+plt.show()
+print(mse(y_test,preds))
+'''
 
 
