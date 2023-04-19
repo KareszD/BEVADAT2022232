@@ -164,7 +164,7 @@ plotos(y_test,preds)
 plt.show()
 print(mse(y_test,preds))
 '''
-
+'''
 #LOG
 iris = load_iris_data()
 X,y = logistic_train_data(iris)
@@ -174,6 +174,6 @@ preds = predict(linmod,X_test)
 plot_actual_vs_predicted(y_test,preds)
 plt.show()
 print(evaluate_model(y_test,preds))
-
+'''
 
 
