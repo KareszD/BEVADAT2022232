@@ -46,7 +46,7 @@ Egy példa a kimenetre: X, y
 return type: (numpy.ndarray, numpy.ndarray)
 '''
 
-def preplinreg(iris):
+def linear_train_data(iris):
     df = pd.DataFrame(iris.data, columns=iris.feature_names)
     X = df["sepal width (cm)"].values.reshape(-1,1)
     y = df['sepal length (cm)'].values.reshape(-1,1)
@@ -62,12 +62,12 @@ Egy példa a kimenetre: X, y
 return type: (numpy.ndarray, numpy.ndarray)
 '''
 
-def preplogreg(iris):
+def logistic_train_data(iris):
     df = pd.DataFrame(iris.data)
     df['class'] = iris.target
 
-    df.columns = ['sepal_len', 'sepal_wid', 'petal_len', 'petal_wid', 'class']
-    X = df.iloc[:, :-1]
+    df.columns=['sepal_len', 'sepal_wid', 'petal_len', 'petal_wid', 'class']
+    X = df[['sepal_len', 'sepal_wid']]
     y = df.iloc[:, -1]
     return X, y
 
@@ -80,7 +80,7 @@ Egy példa a kimenetre: X_train, X_test, y_train, y_test
 return type: (numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray)
 '''
 
-def dara(X,y):
+def split_data(X,y):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     return X_train, X_test, y_train, y_test
 
@@ -92,7 +92,7 @@ Egy példa a kimenetre: model
 return type: sklearn.linear_model._base.LinearRegression
 '''
 
-def fitlin(X_train,y_train)->LinearRegression:
+def train_linear_regression(X_train,y_train)->LinearRegression:
     a = LinearRegression()
     a.fit(X = X_train,y = y_train)
     return a
@@ -105,7 +105,7 @@ Egy példa a kimenetre: model
 return type: sklearn.linear_model._base.LogisticRegression
 '''
 
-def fitlog(X_train,y_train)->LogisticRegression:
+def train_logistic_regression(X_train,y_train)->LogisticRegression:
     return LogisticRegression().fit(X = X_train,y = y_train)
 
 ''' 
@@ -116,7 +116,7 @@ Egy példa a kimenetre: y_pred
 return type: numpy.ndarray
 '''
 
-def pred(model,X_test)->numpy.ndarray:
+def predict(model,X_test)->numpy.ndarray:
     if model is LogisticRegression:
         return model.predict(X = X_test)
     else:
@@ -135,7 +135,7 @@ Egy példa a kimenetre: scatter plot
 return type: matplotlib.figure.Figure
 '''
 
-def plotos(y_test,y_pred):
+def plot_actual_vs_predicted(y_test,y_pred):
     fig, ax = plt.subplots()
     ax.scatter(y_test, y_pred)
     ax.set_title('Actual vs Predicted Target Values')
@@ -151,7 +151,7 @@ Egy példa a kimenetre: mse
 return type: float
 '''
 
-def mse(y_test,y_pred):
+def evaluate_model(y_test,y_pred):
     return np.mean((y_pred - y_test)**2)
 '''
 #LIN
@@ -164,16 +164,16 @@ plotos(y_test,preds)
 plt.show()
 print(mse(y_test,preds))
 '''
-'''
+
 #LOG
 iris = load_iris_data()
-X,y = preplogreg(iris)
-X_train, X_test, y_train, y_test = dara(X,y)
-linmod = fitlog(X_train,y_train)
-preds = pred(linmod,X_test)
-plotos(y_test,preds)
+X,y = logistic_train_data(iris)
+X_train, X_test, y_train, y_test = split_data(X,y)
+linmod = train_logistic_regression(X_train,y_train)
+preds = predict(linmod,X_test)
+plot_actual_vs_predicted(y_test,preds)
 plt.show()
-print(mse(y_test,preds))
-'''
+print(evaluate_model(y_test,preds))
+
 
 
