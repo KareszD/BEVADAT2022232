@@ -33,7 +33,7 @@ függvény neve: check_data
 
 def check_data(iris)->pd.core.frame.DataFrame:
     df = pd.DataFrame(iris.data, columns=iris.feature_names)
-    return df.iloc[:5,:2]
+    return df[["sepal width (cm)", "sepal length (cm)"]].head()
 
 #print(check_data(load_iris_data()))
 
@@ -48,8 +48,10 @@ return type: (numpy.ndarray, numpy.ndarray)
 
 def linear_train_data(iris):
     df = pd.DataFrame(iris.data, columns=iris.feature_names)
-    X = df["sepal width (cm)"].values.reshape(-1,1)
-    y = df['sepal length (cm)'].values.reshape(-1,1)
+    #X = df["sepal width (cm)"].values.reshape(-1,1)
+    #y = df['sepal length (cm)'].values.reshape(-1,1)
+    X = df.loc[:, ['sepal width (cm)', 'petal length (cm)', 'petal width (cm)']].values
+    y = df['sepal length (cm)'].values
     return X,y
 
 ''' 
@@ -66,9 +68,11 @@ def logistic_train_data(iris):
     df = pd.DataFrame(iris.data)
     df['class'] = iris.target
 
-    df.columns=['sepal_len', 'sepal_wid', 'petal_len', 'petal_wid', 'class']
-    X = df[['sepal_len', 'sepal_wid']]
-    y = df.iloc[:, -1]
+    df.columns = ['sepal_len', 'sepal_wid', 'petal_len', 'petal_wid', 'class']
+    X = df[["sepal_wid", "sepal_len"]]
+    mask = (df["class"] < 2) & (df["class"] >= 0)
+    y_df = df[mask]
+    y = y_df.iloc[:, -1]
     return X, y
 
 '''
@@ -156,14 +160,14 @@ def evaluate_model(y_test,y_pred):
 '''
 #LIN
 iris = load_iris_data()
-X,y = preplinreg(iris)
-X_train, X_test, y_train, y_test = dara(X,y)
-linmod = fitlin(X_train,y_train)
-preds = pred(linmod,X_test)
-plotos(y_test,preds)
+X,y = linear_train_data(iris)
+X_train, X_test, y_train, y_test = split_data(X,y)
+linmod = train_linear_regression(X_train,y_train)
+preds = predict(linmod,X_test)
+plot_actual_vs_predicted(y_test,preds)
 plt.show()
-print(mse(y_test,preds))
-'''
+print(evaluate_model(y_test,preds))
+
 '''
 #LOG
 iris = load_iris_data()
@@ -174,6 +178,6 @@ preds = predict(linmod,X_test)
 plot_actual_vs_predicted(y_test,preds)
 plt.show()
 print(evaluate_model(y_test,preds))
-'''
+
 
 
