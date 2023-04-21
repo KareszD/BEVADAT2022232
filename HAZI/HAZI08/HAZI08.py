@@ -31,9 +31,9 @@ return type: pandas.core.frame.DataFrame
 függvény neve: check_data
 '''
 
-def check_data(iris)->pd.core.frame.DataFrame:
+def check_data(iris)->pd.DataFrame:
     df = pd.DataFrame(iris.data, columns=iris.feature_names)
-    return df[["sepal width (cm)", "sepal length (cm)"]].head()
+    return df.head(5)
 
 #print(check_data(load_iris_data()))
 
@@ -157,6 +157,7 @@ return type: float
 
 def evaluate_model(y_test,y_pred):
     return np.mean((y_pred - y_test)**2)
+
 '''
 #LIN
 iris = load_iris_data()
@@ -179,5 +180,3 @@ plot_actual_vs_predicted(y_test,preds)
 plt.show()
 print(evaluate_model(y_test,preds))
 '''
-
-
