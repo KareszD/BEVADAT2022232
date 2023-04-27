@@ -84,19 +84,18 @@ class KMeansOnDigits():
         y = self.digits.target
         #kmeans.fit_predict(X=X,y=y)
         self.clusters = kmeans.fit_predict(X=X,y=y)
-        self.xd = kmeans.labels_
+        #self.xd = kmeans.labels_
 
     def get_labels(self):
-        '''
-        result = np.array(self.clusters.shape)
+        result = np.empty(self.clusters.shape)
         for x in self.digits.target_names:
             mask = self.clusters == x
             sub_arr = self.digits.target[mask]
-            arr_mod = mode(sub_arr)
+            arr_mod = mode(sub_arr).mode.item()
             result[mask] = arr_mod
         self.labels = result
-        '''
-        self.labels = self.xd
+
+        #self.labels = self.xd
 
     def calc_accuracy(self):
         self.accuracy = accuracy_score(self.digits.target,self.labels)
