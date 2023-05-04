@@ -13,7 +13,9 @@ def mnist_digit_data():
     (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data()
     train_images = train_images / 255
     train_labels = train_labels / 255
-    return (train_images, train_labels), (test_images, test_labels)
+    train_labels = train_labels.astype("float32")
+    test_labels = test_labels.astype("float32")
+    return train_images, train_labels, test_images, test_labels
 
 '''
 Készíts egy neurális hálót, ami képes felismerni a kézírásos számokat.
@@ -74,16 +76,17 @@ return type: float, float
 függvény neve: model_evaluate
 '''
 
-def model_evaluate(model, test_images, test_labels):
-    test_loss = model.evaluate(test_images, test_labels)
-    return test_loss
+def model_evaluate(model: tf.keras.Sequential, test_images, test_labels):
+    test_loss,test_acc = model.evaluate(test_images, test_labels,verbose=2)
+    return test_loss,test_acc
 
-(train_images, train_labels), (test_images, test_labels) = mnist_digit_data()
+train_images, train_labels, test_images, test_labels = mnist_digit_data()
 model = mnist_model()
 model = model_compile(model)
 model = model_compile(model)
 model = model_fit(model, 10, train_images, train_labels)
 
-test_loss = model.evaluate(model, test_images, test_labels)
+test_loss, test_acc = model_evaluate(model, test_images, test_labels)
 
 print("loss:", test_loss)
+print("acc:", test_acc)
