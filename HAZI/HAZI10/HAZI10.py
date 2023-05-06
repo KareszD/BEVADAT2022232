@@ -13,8 +13,8 @@ def mnist_digit_data():
     (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data()
     train_images = train_images / 255
     train_labels = train_labels / 255
-    train_labels = train_labels.astype("float32")
-    test_labels = test_labels.astype("float32")
+    train_labels = train_labels.astype("float32") / 255
+    test_labels = test_labels.astype("float32") / 255
     return train_images, train_labels, test_images, test_labels
 
 '''
@@ -28,15 +28,16 @@ return type: keras.engine.sequential.Sequential
 függvény neve: mnist_model
 '''
 
-def mnist_model():
-    model = tf.keras.Sequential([
-        tf.keras.layers.Flatten(input_shape=(28, 28)),
-        tf.keras.layers.Dense(128, activation='relu'),
-        tf.keras.layers.Dense(10)
-    ])
-    model = tf.keras.Sequential([model,
-                                 tf.keras.layers.Softmax()])
-    return model
+def mnist_model() -> tf.keras.Sequential:
+  model = tf.keras.Sequential([
+      tf.keras.layers.Flatten(input_shape=(28, 28)),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dense(10)
+  ])
+
+  model = tf.keras.Sequential([model,
+                       tf.keras.layers.Softmax()])
+  return model
 
 '''
 Készíts egy metódust, ami a bemeneti hálot compile-olja.
@@ -49,10 +50,13 @@ return type: keras.engine.sequential.Sequential
 függvény neve: model_compile
 '''
 
-def model_compile(model):
-    model.compile(optimizer='adam',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False))
-    return model
+def model_compile(model: tf.keras.Sequential) -> tf.keras.Sequential:
+  model.compile(
+      optimizer='adam',
+      loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+      metrics=['accuracy']
+  )
+  return model
 
 '''
 Készíts egy metódust, ami a bemeneti hálót feltanítja.
@@ -63,9 +67,9 @@ return type: keras.engine.sequential.Sequential
 függvény neve: model_fit
 '''
 
-def model_fit(model,epochs, train_images, train_labels):
-    model.fit(train_images, train_labels, epochs=epochs)
-    return model
+def model_fit(model: tf.keras.Sequential, epochs: int, train_images, train_labels) -> tf.keras.Sequential:
+  model.fit(train_images, train_labels, epochs=epochs)
+  return model
 
 '''
 Készíts egy metódust, ami a bemeneti hálót kiértékeli a teszt adatokon.
@@ -77,8 +81,9 @@ függvény neve: model_evaluate
 '''
 
 def model_evaluate(model: tf.keras.Sequential, test_images, test_labels):
-    test_loss,test_acc = model.evaluate(test_images, test_labels,verbose=2)
-    return test_loss,test_acc
+  test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
+  return test_loss, test_acc
+
 '''
 train_images, train_labels, test_images, test_labels = mnist_digit_data()
 model = mnist_model()
