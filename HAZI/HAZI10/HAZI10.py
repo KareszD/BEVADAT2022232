@@ -79,7 +79,7 @@ függvény neve: model_evaluate
 def model_evaluate(model: tf.keras.Sequential, test_images, test_labels):
     test_loss,test_acc = model.evaluate(test_images, test_labels,verbose=2)
     return test_loss,test_acc
-
+'''
 train_images, train_labels, test_images, test_labels = mnist_digit_data()
 model = mnist_model()
 model = model_compile(model)
@@ -90,3 +90,4 @@ test_loss, test_acc = model_evaluate(model, test_images, test_labels)
 
 print("loss:", test_loss)
 print("acc:", test_acc)
+'''
