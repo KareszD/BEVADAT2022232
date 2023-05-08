@@ -12,7 +12,7 @@ függvény neve: mnist_digit_data
 def mnist_digit_data():
     (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data()
     train_images = train_images / 255
-    train_labels = train_labels / 255
+    test_images = test_images / 255
     train_labels = train_labels.astype("float32") / 255
     test_labels = test_labels.astype("float32") / 255
     return train_images, train_labels, test_images, test_labels
