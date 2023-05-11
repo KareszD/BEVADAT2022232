@@ -82,13 +82,14 @@ def model_evaluate(model, test_images, test_labels):
     test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=2)
     return test_loss,test_acc
 
-
+'''
 train_images, train_labels, test_images, test_labels = cifar100_data()
 model = cifar100_model()
 model = model_compile(model)
-model = model_fit(model, 10, train_images, train_labels)
+model = model_fit(model, 30, train_images, train_labels)
 
 test_loss, test_acc = model_evaluate(model, test_images, test_labels)
 
 print("loss:", test_loss)
 print("acc:", test_acc)
+'''
